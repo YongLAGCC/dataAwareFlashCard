@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "253113194602",
+    "firebase_url": "https://dataawareflashcardapp.firebaseio.com",
+    "project_id": "dataawareflashcardapp",
+    "storage_bucket": "dataawareflashcardapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253113194602:android:62b068d8374705f2e75213",
+        "android_client_info": {
+          "package_name": "com.cs591.assignment3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253113194602-u0cnai7p1akdbbm38ncmcsk5ot0e3t3d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs591.assignment3",
+            "certificate_hash": "94af83942b822898ba8791649197d54e8af41b34"
+          }
+        },
+        {
+          "client_id": "253113194602-je8o2hpmgst6e8nsdsto7r2gf3fc4smn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlF4vssEEaEqolG-gvD1oKmffX2joKjVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253113194602-je8o2hpmgst6e8nsdsto7r2gf3fc4smn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
