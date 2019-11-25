@@ -21,6 +21,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Button btnGameGenerate;
     private Button btnGameSubmit;
+    private Button btnTopFive;
 
     private TextView tvGameNum1;
     private TextView tvGameNum2;
@@ -57,6 +58,9 @@ public class GameActivity extends AppCompatActivity {
 
         btnGameSubmit = findViewById(R.id.btnGameSubmit);
         btnGameSubmit.setOnClickListener(e -> submit());
+
+        btnTopFive = findViewById(R.id.btnTopFive);
+        btnTopFive.setOnClickListener(e->topfive());
 
         if (savedInstanceState != null) restore(savedInstanceState);
         else {
@@ -107,6 +111,11 @@ public class GameActivity extends AppCompatActivity {
             etGameAnswer.setText("");
         }
     }
+
+   public void topfive() {
+       Intent intent = new Intent(this, ScoresActivity.class);
+       startActivity(intent);
+   }
 
     public void generateProblem() {
         int small1 = (int)(Math.random()*20) + 1;

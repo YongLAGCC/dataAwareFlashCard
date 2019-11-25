@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    final DatabaseReference mRef = database.getReference("flashCard");
+//    final DatabaseReference mRef = database.getReference("flashCard");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Intent intent = GameActivity.newIntent(LoginActivity.this, "admin");
             startActivity(intent);
-            mRef.setValue(etLoginUser.getText().toString());
+//            mRef.setValue(etLoginUser.getText().toString());
 
 
         } else  {

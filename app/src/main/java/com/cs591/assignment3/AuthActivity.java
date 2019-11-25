@@ -1,5 +1,6 @@
 package com.cs591.assignment3;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +9,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -44,8 +52,29 @@ public class AuthActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null) {
-                    Intent intent = new Intent(AuthActivity.this, LoginActivity.class);
-                    startActivity(intent);
+
+                    DatabaseReference ifuser = FirebaseDatabase.getInstance().getReference();
+                    ifuser.child("users").child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                Intent intent = GameActivity.newIntent(AuthActivity.this, "yongzhou168");
+                                startActivity(intent);
+                            }
+                            else{
+                                Intent intent = GameActivity.newIntent(AuthActivity.this, "yongzhou168");
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+//                    Intent intent = new Intent(AuthActivity.this, GameActivity.class);
+//                    startActivity(intent);
                     finish();
                     return;
                 }
@@ -61,11 +90,24 @@ public class AuthActivity extends AppCompatActivity {
                     if(!task.isSuccessful()) {
                         Toast.makeText(AuthActivity.this, "Registerion error", Toast.LENGTH_SHORT).show();
                     }
-//                     else{
-//                        String user_id = mAuth.getCurrentUser().getUid();
-//                        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id).child("name");
-//                        current_user_db.setValue(email);
-//                    }
+                     else{
+
+                        String user_id = mAuth.getCurrentUser().getUid();
+                        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+
+                        String email = mEmailRegistration.getText().toString();
+
+
+                        HashMap newPost = new HashMap();
+                        newPost.put("name", email);
+//                        newPost.put("score", Score);
+//
+
+                        current_user_db.setValue(newPost);
+//                        DatabaseReference ref = database.getReference( ).child("Users").child("Drivers").child(user_id).child("name");
+                        current_user_db.setValue(email);
+
+                    }
                 }
             });
         } );
