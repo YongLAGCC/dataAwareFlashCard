@@ -19,16 +19,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.HashMap;
 
+import static com.cs591.assignment3.R.id.progressBar;
+
 public class AuthActivity extends AppCompatActivity {
 
     private EditText mEmailLogin, mPasswordLogin, mEmailRegistration, mPasswordRegistration;
+    ProgressBar progressBar;
 
     private Button mButtonLogin, mButtonRegistration;
     private FirebaseAuth mAuth;
+
 
     private  FirebaseAuth.AuthStateListener firebaseAuthListener;
 
@@ -41,6 +46,7 @@ public class AuthActivity extends AppCompatActivity {
         mPasswordLogin = (EditText) findViewById(R.id.passwordLogin);
         mEmailRegistration = (EditText) findViewById(R.id.emailRegistration);
         mPasswordRegistration = (EditText) findViewById(R.id.passwordRegistration);
+        progressBar = findViewById(R.id.progressBar);
 
         mButtonLogin = (Button) findViewById(R.id.buttonLogin);
         mButtonRegistration = (Button) findViewById(R.id.buttonRegistration);
@@ -84,9 +90,11 @@ public class AuthActivity extends AppCompatActivity {
         mButtonRegistration.setOnClickListener( (v) -> {
             String email = mEmailRegistration.getText().toString();
             String passward = mPasswordRegistration.getText().toString();
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword( email, passward).addOnCompleteListener(AuthActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    progressBar.setVisibility(View.GONE);
                     if(!task.isSuccessful()) {
                         Toast.makeText(AuthActivity.this, "Registerion error", Toast.LENGTH_SHORT).show();
                     }
@@ -114,11 +122,13 @@ public class AuthActivity extends AppCompatActivity {
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String email = mEmailLogin.getText().toString();
                 String passward = mPasswordLogin.getText().toString();
                 mAuth.signInWithEmailAndPassword(email, passward).addOnCompleteListener(AuthActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
                         if(!task.isSuccessful()){
                             Toast.makeText(AuthActivity.this, "sign up error", Toast.LENGTH_SHORT).show();
 
@@ -132,6 +142,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         mAuth.addAuthStateListener(firebaseAuthListener);
     }
     @Override

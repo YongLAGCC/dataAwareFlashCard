@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class GameActivity extends AppCompatActivity {
 
     private static final String EXTRA_USERNAME = "com.cs591.assignment3.username";
@@ -22,6 +24,7 @@ public class GameActivity extends AppCompatActivity {
     private Button btnGameGenerate;
     private Button btnGameSubmit;
     private Button btnTopFive;
+    private Button btnSignout;
 
     private TextView tvGameNum1;
     private TextView tvGameNum2;
@@ -59,6 +62,9 @@ public class GameActivity extends AppCompatActivity {
         btnGameSubmit = findViewById(R.id.btnGameSubmit);
         btnGameSubmit.setOnClickListener(e -> submit());
 
+        btnSignout = findViewById(R.id.btnSignOut);
+        btnSignout.setOnClickListener(e->signout());
+
         btnTopFive = findViewById(R.id.btnTopFive);
         btnTopFive.setOnClickListener(e->topfive());
 
@@ -68,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
             toast.setGravity(Gravity.BOTTOM, 0, 20);
             toast.show();
         }
+
     }
 
     @Override
@@ -147,5 +154,10 @@ public class GameActivity extends AppCompatActivity {
             tvGameNum1.setText(bundle.getInt(NUM1) + "");
             tvGameNum2.setText(bundle.getInt(NUM2) + "");
         }
+    }
+
+    public void signout(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity( new Intent(this, AuthActivity.class));
     }
 }
